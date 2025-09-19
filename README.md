@@ -25,3 +25,10 @@ Clone the repository and install dependencies:
 git clone https://github.com/masernab/DesignPatterns.git
 cd design-patterns-php
 composer install
+```
+
+### How to run it?
+Type the command
+```bash
+php artisan design-pattern:run
+```
