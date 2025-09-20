@@ -9,7 +9,7 @@ It is meant for learning and quick reference purposes.
 
 - **Factory Method**  
   Demonstrates how to delegate the instantiation of objects to subclasses using a common interface.  
-  Example: Creating different types of buttons (`CtrlButton`, `CommandButton`) depending on the operating system.
+  Example: Creating different types of keyboards (`WindowsKeyboard`, `MacKeyboard`, `LinuxKeyboard`) depending on the operating system.
 
 ---
 
