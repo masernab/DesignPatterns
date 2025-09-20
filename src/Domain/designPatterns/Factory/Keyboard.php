@@ -2,9 +2,9 @@
 
 namespace Domain\designPatterns\Factory;
 
-interface KeyboardButton
+interface Keyboard
 {
     public function render(): string;
 
-    public function press(): void;
+    public function type(): void;
 }

@@ -4,8 +4,8 @@ namespace Domain\designPatterns\Factory;
 
 class WindowsKeyboardFactory extends KeyboardFactory
 {
-    public function createButton(): KeyboardButton
+    public function createKeyboard(): Keyboard
     {
-        return new CtrlButton();
+        return new WindowsKeyboard();
     }
 }

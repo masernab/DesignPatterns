@@ -4,13 +4,13 @@ namespace Domain\designPatterns\Factory;
 
 abstract class KeyboardFactory
 {
-    abstract public function createButton(): KeyboardButton;
+    abstract public function createKeyboard(): Keyboard;
 
     public function render(): void
     {
-        $button = $this->createButton();
+        $button = $this->createKeyboard();
         $button->render();
-        $button->press();
+        $button->type();
     }
 }
 
