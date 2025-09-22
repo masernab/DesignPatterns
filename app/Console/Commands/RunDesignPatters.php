@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use Domain\designPatterns\AbstractFactory\GUIFactory\GUIFactory;
+use Domain\designPatterns\AbstractFactory\GUIFactory\WInFactory;
 use Domain\designPatterns\Factory\KeyboardFactory;
 use Domain\designPatterns\Factory\LinuxKeyboardFactory;
 use Domain\designPatterns\Factory\MacKeyboardFactory;
@@ -15,13 +17,13 @@ class RunDesignPatters extends Command
     protected $description = 'Run design patterns example';
 
     public KeyboardFactory $keyboardFactory;
+    public GUIFactory $guiFactory;
 
     public function handle(): void
     {
         $pattern = $this->argument('pattern');
 
-        if (!$pattern) {
-
+        if (! $pattern) {
             $this->info('#----Design Patterns Application-----#');
 
             $this->newLine();
@@ -31,18 +33,23 @@ class RunDesignPatters extends Command
                 ['ID', 'Pattern', 'Description'],
                 [
                     [1, 'Factory', 'Creational pattern'],
+                    [2, 'Abstract Factory', 'Creational pattern'],
                 ]
             );
 
             $pattern = $this->components->choice(
                 'Choose a pattern:',
-                ['1' => 'factory'],
+                [
+                    '1' => 'factory',
+                    '2' => 'abstract factory'
+                ],
                 '1'
             );
         }
 
         match ($pattern) {
             '1', 'factory' => $this->runFactory(),
+            '2', 'abstract factory' => $this->runAbstractFactory(),
             default => throw new \Exception("Pattern {$pattern} not found"),
         };
     }
@@ -50,7 +57,7 @@ class RunDesignPatters extends Command
     public function runFactory(): void
     {
         try {
-            $this->initialization();
+            $this->initializeFactory();
             $this->keyboardFactory->render();
         } catch (\Exception $e) {
             echo $e->getMessage();
@@ -60,7 +67,7 @@ class RunDesignPatters extends Command
     /**
      * @throws \Exception
      */
-    private function initialization(): void
+    private function initializeFactory(): void
     {
         $os = PHP_OS_FAMILY;
 
@@ -70,5 +77,29 @@ class RunDesignPatters extends Command
             'Linux' => new LinuxKeyboardFactory(),
             default => throw new \Exception("No support for {$os}"),
         };
+    }
+
+    private function initializeAbstractFactory(): void
+    {
+        $os = PHP_OS_FAMILY;
+
+        $this->guiFactory = match ($os) {
+            'Windows' => new WInFactory(),
+            default => throw new \Exception("No support for {$os}"),
+        };
+    }
+
+    private function runAbstractFactory(): void
+    {
+        try {
+            $this->initializeAbstractFactory();
+            $button = $this->guiFactory->createButton();
+            $checkbox = $this->guiFactory->createCheckbox();
+
+            $button->paint();
+            $checkbox->paint();
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
     }
 }
