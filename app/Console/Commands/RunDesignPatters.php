@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Domain\designPatterns\AbstractFactory\GUIFactory\GUIFactory;
+use Domain\designPatterns\AbstractFactory\GUIFactory\LinuxFactory;
+use Domain\designPatterns\AbstractFactory\GUIFactory\MacFactory;
 use Domain\designPatterns\AbstractFactory\GUIFactory\WInFactory;
 use Domain\designPatterns\Factory\KeyboardFactory;
 use Domain\designPatterns\Factory\LinuxKeyboardFactory;
@@ -85,6 +87,8 @@ class RunDesignPatters extends Command
 
         $this->guiFactory = match ($os) {
             'Windows' => new WInFactory(),
+            'Darwin' => new MacFactory(),
+            'Linux' => new LinuxFactory(),
             default => throw new \Exception("No support for {$os}"),
         };
     }
