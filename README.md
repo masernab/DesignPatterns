@@ -44,6 +44,8 @@ It is meant for learning and quick reference purposes.
       └── DragonBallCharacterDirector.php
   ```
 
+- **Prototype**  
+  Prototype is a creational design pattern that lets you copy existing objects without making your code dependent on their classes.
 ---
 
 ## 🚀 Getting Started
@@ -61,7 +63,7 @@ Clone the repository and install dependencies:
 ```
 
 ### How to run it?
-Type the command
+Type the command and choose the design patter
 ```bash
   php artisan design-pattern:run
 ```
