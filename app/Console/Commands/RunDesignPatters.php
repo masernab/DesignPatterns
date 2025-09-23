@@ -6,11 +6,14 @@ use Domain\designPatterns\AbstractFactory\GUIFactory\GUIFactory;
 use Domain\designPatterns\AbstractFactory\GUIFactory\LinuxFactory;
 use Domain\designPatterns\AbstractFactory\GUIFactory\MacFactory;
 use Domain\designPatterns\AbstractFactory\GUIFactory\WInFactory;
+use Domain\designPatterns\Builder\DragonBallCharacterDirector;
+use Domain\designPatterns\Builder\DragonBallCharacterBuilder;
 use Domain\designPatterns\Factory\KeyboardFactory;
 use Domain\designPatterns\Factory\LinuxKeyboardFactory;
 use Domain\designPatterns\Factory\MacKeyboardFactory;
 use Domain\designPatterns\Factory\WindowsKeyboardFactory;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 
 class RunDesignPatters extends Command
 {
@@ -32,10 +35,11 @@ class RunDesignPatters extends Command
             $this->components->twoColumnDetail('<fg=green>Available patterns:</>');
 
             $this->table(
-                ['ID', 'Pattern', 'Description'],
+                ['ID', 'Pattern', 'Family'],
                 [
-                    [1, 'Factory', 'Creational pattern'],
+                    [1, 'Factory',          'Creational pattern'],
                     [2, 'Abstract Factory', 'Creational pattern'],
+                    [3, 'Builder',          'Creational pattern'],
                 ]
             );
 
@@ -43,7 +47,8 @@ class RunDesignPatters extends Command
                 'Choose a pattern:',
                 [
                     '1' => 'factory',
-                    '2' => 'abstract factory'
+                    '2' => 'abstract factory',
+                    '3' => 'builder',
                 ],
                 '1'
             );
@@ -52,6 +57,7 @@ class RunDesignPatters extends Command
         match ($pattern) {
             '1', 'factory' => $this->runFactory(),
             '2', 'abstract factory' => $this->runAbstractFactory(),
+            '3', 'builder' => $this->runBuilder(),
             default => throw new \Exception("Pattern {$pattern} not found"),
         };
     }
@@ -105,5 +111,30 @@ class RunDesignPatters extends Command
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
+    }
+
+    private function runBuilder(): void
+    {
+        $goku = (new DragonBallCharacterBuilder())
+            ->setName("Son Goku")
+            ->setSpecie("Saiyan")
+            ->setOrigin("Planet Vegeta")
+            ->setTransformations([
+                "Kaioken",
+                "Super Saiyan",
+            ])
+            ->setRelatives(["Gohan", "Goten", "Chi-Chi", "Bardock"])
+            ->build();
+
+        echo $goku->summary();
+
+        echo PHP_EOL;
+
+        //Using Director
+        $vegeta = (new DragonBallCharacterDirector())
+            ->setBuilder(new DragonBallCharacterBuilder())
+            ->createVegeta();
+
+        echo $vegeta->summary();
     }
 }
