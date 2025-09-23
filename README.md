@@ -28,6 +28,21 @@ It is meant for learning and quick reference purposes.
       ├── MacFactory.php
       └── LinuxFactory.php
   ```
+  
+- **Builder**  
+  A creational design pattern that enables step-by-step construction of complex objects with many optional properties.
+  The pattern is particularly useful when an object needs to be created with numerous possible configurations.  
+  Example: Creating Dragon Ball characters with various optional attributes (name, species, transformations, etc.)
+  without the need to specify all parameters or use multiple constructors.
+  ```bash
+  Builder
+  ├── Interfaces/
+  │   └── Builder.php
+  └── Implementations/
+      ├── DragonBallCharacter.php
+      ├── DragonBallCharacterBuilder.php
+      └── DragonBallCharacterDirector.php
+  ```
 
 ---
 
@@ -40,13 +55,13 @@ It is meant for learning and quick reference purposes.
 ### Installation
 Clone the repository and install dependencies:
 ```bash
-git clone https://github.com/masernab/DesignPatterns.git
-cd design-patterns-php
-composer install
+  git clone https://github.com/masernab/DesignPatterns.git
+  cd design-patterns-php
+  composer install
 ```
 
 ### How to run it?
 Type the command
 ```bash
-php artisan design-pattern:run
+  php artisan design-pattern:run
 ```
