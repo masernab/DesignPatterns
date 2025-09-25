@@ -13,6 +13,7 @@ use Domain\designPatterns\Factory\LinuxKeyboardFactory;
 use Domain\designPatterns\Factory\MacKeyboardFactory;
 use Domain\designPatterns\Factory\WindowsKeyboardFactory;
 use Domain\designPatterns\Prototype\VideoGameCharacter;
+use Domain\designPatterns\Singleton\Basket;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 
@@ -42,6 +43,7 @@ class RunDesignPatters extends Command
                     [2, 'Abstract Factory', 'Creational pattern'],
                     [3, 'Builder',          'Creational pattern'],
                     [4, 'Prototype',        'Creational pattern'],
+                    [5, 'Singleton',        'Creational pattern'],
                 ]
             );
 
@@ -52,6 +54,7 @@ class RunDesignPatters extends Command
                     '2' => 'abstract factory',
                     '3' => 'builder',
                     '4' => 'prototype',
+                    '5' => 'singleton',
                 ],
                 '1'
             );
@@ -62,6 +65,7 @@ class RunDesignPatters extends Command
             '2', 'abstract factory' => $this->runAbstractFactory(),
             '3', 'builder' => $this->runBuilder(),
             '4', 'prototype' => $this->runPrototype(),
+            '5', 'singleton' => $this->runSingleton(),
             default => throw new \Exception("Pattern {$pattern} not found"),
         };
     }
@@ -161,5 +165,19 @@ class RunDesignPatters extends Command
 
         print_r($mage);
         print_r($mageClone);
+    }
+
+    private function runSingleton(): void
+    {
+        $basket = Basket::getInstance();
+
+        $basket->addItem("Apple");
+        $basket->addItem("Banana");
+        $basket->addItem("Orange");
+
+        $basket = Basket::getInstance();
+        $basket->addItem("Pear");
+
+        print_r($basket);
     }
 }
